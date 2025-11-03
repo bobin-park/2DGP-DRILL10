@@ -1,5 +1,8 @@
 from pico2d import *
 
+import game_world
+import game_framework
+
 #새의 크기 : 50*50
 #날개짓 속도 : 7
 
@@ -29,4 +32,7 @@ class Bird:
         if self.dir==0:
             self.image.clip_draw(int(self.frame) * 185, 0, 185, 170, self.x, self.y, 50, 50)
         elif self.dir==1:
-            self.image.clip_composite_draw(int(self.frame) * 183, 0, 183, 168, 0, 'h', self.x, self.y, 50, 50)
+            self.image.clip_composite_draw(int(self.frame) * 185, 0, 185, 170, 0, 'h', self.x, self.y, 50, 50)
+
+    def do(self):
+        pass
