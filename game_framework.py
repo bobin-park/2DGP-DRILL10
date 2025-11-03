@@ -40,7 +40,6 @@ def quit():
     global running
     running = False
 
-
 def run(start_mode):
     global running, stack
     running = True
