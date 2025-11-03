@@ -34,8 +34,15 @@ def init():
     boy = Boy()
     game_world.add_object(boy, 1)
 
-    birds = Bird()
-    game_world.add_object(birds, 2)
+    bird = Bird()
+    birds_xy=[(200, 450), (400, 500), (600, 420),
+    (800, 480), (1000, 460), (1200, 430),
+    (1400, 490), (300, 440), (1100, 520),(500, 470)]
+
+    for b in birds_xy:
+        bird = Bird()
+        bird.x, bird.y = b
+        game_world.add_object(bird, 2)
 
 def update():
     game_world.update()
