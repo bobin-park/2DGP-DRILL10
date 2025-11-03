@@ -26,7 +26,15 @@ class Bird:
         self.image = load_image('bird_animation.png')
 
     def update(self):
-       pass
+        if self.dir == 0:
+            self.x += RUN_SPEED_PPS * game_framework.frame_time
+        else:
+            self.x -= RUN_SPEED_PPS * game_framework.frame_time
+        if self.x > 1600 - 25:
+            self.dir = 1
+        elif self.x < 25:
+            self.dir = 0
+        self.do()
 
     def draw(self):
         if self.dir==0:
