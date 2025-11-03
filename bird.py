@@ -1,4 +1,4 @@
-from pico2d import *
+from pico2d import load_image, get_time, load_font
 
 import game_world
 import game_framework
@@ -21,12 +21,12 @@ class Bird:
         self.x, self.y = 300, 300
 
         self.frame = 0
-        # self.face_dir = 1
+        self.frame_h=340
         self.dir = 0
         self.image = load_image('bird_animation.png')
 
     def update(self):
-        pass
+       pass
 
     def draw(self):
         if self.dir==0:
@@ -35,4 +35,11 @@ class Bird:
             self.image.clip_composite_draw(int(self.frame) * 185, 0, 185, 170, 0, 'h', self.x, self.y, 50, 50)
 
     def do(self):
-        pass
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+        if self.frame > 4:
+            self.frame_h -= 170
+            self.frame = 0
+
+        if self.frame_h == 0 and self.frame > 3:
+            self.frame_h = 140
+            self.frame = 0
