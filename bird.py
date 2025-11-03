@@ -1,5 +1,8 @@
 from pico2d import *
 
+#새의 크기 : 50*50
+#날개짓 속도 : 7
+
 PIXEL_PER_METER = (10.0 / 0.3)
 RUN_SPEED_KMPH=13.0
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
@@ -12,10 +15,10 @@ FRAMES_PER_ACTION = 7
 
 class Bird:
     def __init__(self):
-        self.x, self.y = 400, 90
+        self.x, self.y = 300, 300
 
         self.frame = 0
-        self.face_dir = 1
+        # self.face_dir = 1
         self.dir = 0
         self.image = load_image('bird_animation.png')
 
@@ -23,4 +26,7 @@ class Bird:
         pass
 
     def draw(self):
-        self.image.clip_draw(int(self.frame) * 200, 0, 100, 175, self.x, self.y)
+        if self.dir==0:
+            self.image.clip_draw(int(self.frame) * 185, 0, 185, 170, self.x, self.y, 50, 50)
+        elif self.dir==1:
+            self.image.clip_composite_draw(int(self.frame) * 183, 0, 183, 168, 0, 'h', self.x, self.y, 50, 50)
