@@ -13,39 +13,19 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
 def space_down(e): # e is space down ?
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
-
 time_out = lambda e: e[0] == 'TIMEOUT'
-
 def right_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
-
-
 def right_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_RIGHT
-
-
 def left_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LEFT
-
-
 def left_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LEFT
-
-
-
 # Boy의 Run Speed 계산
 
 # Boy Run Speed
 # 여기를 채우시오.
-
-
-
-
-
-
-
-
-
 class Idle:
 
     def __init__(self, boy):
@@ -71,8 +51,6 @@ class Idle:
             self.boy.image.clip_draw(self.boy.frame * 100, 300, 100, 100, self.boy.x, self.boy.y)
         else: # face_dir == -1: # left
             self.boy.image.clip_draw(self.boy.frame * 100, 200, 100, 100, self.boy.x, self.boy.y)
-
-
 class Sleep:
 
     def __init__(self, boy):
@@ -96,12 +74,10 @@ class Sleep:
             self.boy.image.clip_composite_draw(self.boy.frame* 100, 300, 100, 100, 3.141592/2, '', self.boy.x - 25, self.boy.y - 25, 100, 100)
         else:
             self.boy.image.clip_composite_draw(self.boy.frame * 100, 200, 100, 100, -3.141592/2, '', self.boy.x + 25, self.boy.y - 25, 100, 100)
-
-
-
 class Run:
     def __init__(self, boy):
         self.boy = boy
+
 
     def enter(self, e):
         if right_down(e) or left_up(e):
@@ -115,7 +91,7 @@ class Run:
 
     def do(self):
         self.boy.frame = (self.boy.frame + 1) % 8
-        self.boy.x += self.boy.dir * 5
+        self.boy.x += self.boy.dir * RUN_SPEED_PPS * game_framework.frame_time
 
     def draw(self):
         if self.boy.face_dir == 1: # right
@@ -123,15 +99,9 @@ class Run:
         else: # face_dir == -1: # left
             self.boy.image.clip_draw(self.boy.frame * 100, 0, 100, 100, self.boy.x, self.boy.y)
 
-
-
-
-
-
-
 class Boy:
     def __init__(self):
-
+        self.font = load_font('ENCR10B.TTF', 16)
         self.item = None
 
         self.x, self.y = 400, 90
@@ -164,6 +134,7 @@ class Boy:
 
     def draw(self):
         self.state_machine.draw()
+        self.font.draw(self.x - 60, self.y + 50, f'(Time: {get_time():.2f})', (255, 255, 0))
 
 
     def fire_ball(self):
